@@ -9,11 +9,14 @@ public class Application {
     public static void main(String[] args) {
         log("application started");
 
-        CustomerRepository repository = new JdbcRepository("jdbc:derby:database;create=true");
+     //   CustomerRepository repository = new InMemoryRepository("jdbc:derby:database;create=true");
+      //  CustomerRepository repository = new JdbcRepository("jdbc:derby:database;create=true");
+        CustomerRepository repository = new JpaRepository();
+
         Customer customer = new Customer();
         customer.setEmail("example@customer.com");
         customer.setLastname("Customer");
-        customer.setFirstname("Carlo");
+        customer.setFirstname("Heinzi");
 
         // 1) Create
         repository.create(customer);
