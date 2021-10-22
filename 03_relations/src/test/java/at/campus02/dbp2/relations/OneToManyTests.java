@@ -2,6 +2,7 @@ package at.campus02.dbp2.relations;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
@@ -56,6 +57,7 @@ public class OneToManyTests {
     }
 
     @Test
+    @Disabled("Only works without orphanRemoval - enable after setting orphanremoval to false")
     public void updateExampleWithCorrectingReferences(){
         Animal clownfish = new Animal("Nemo");
         Animal squirrel = new Animal("Squirrel");
@@ -89,7 +91,39 @@ public class OneToManyTests {
         assertThat(mergeFish.getAnimals().size(), is(1));
     }
 
+@Test
+    public void orphansRemovalDeletesOrphansFromDatabase(){
+    Animal clownfish = new Animal("Nemo");
+    Animal squirrel = new Animal("Squirrel");
+    Species fish = new Species("Fish");
 
+    clownfish.setSpecies(fish);
+    squirrel.setSpecies(fish);
+
+    fish.getAnimals().add(clownfish);
+    fish.getAnimals().add(squirrel);
+
+    manager.getTransaction().begin();
+    manager.persist(fish);
+    manager.getTransaction().commit();
+
+    manager.clear();
+    //fail
+    manager.getTransaction().begin();
+    fish.getAnimals().remove(squirrel);
+    manager.merge(fish);
+    manager.getTransaction().commit();
+    manager.clear();
+
+    Animal squirrelFromDb = manager.find(Animal.class,squirrel.getId());
+    assertThat(squirrelFromDb,is(nullValue()));
+
+    Species refreshedFish = manager.merge(fish);
+    manager.refresh(refreshedFish);
+
+    assertThat(refreshedFish.getAnimals().size(),is(1));
+
+}
 
 
 
