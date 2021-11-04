@@ -9,6 +9,7 @@ public class Customer {
 
     @Id
     private String email;
+
     private String firstname;
     private String lastname;
 

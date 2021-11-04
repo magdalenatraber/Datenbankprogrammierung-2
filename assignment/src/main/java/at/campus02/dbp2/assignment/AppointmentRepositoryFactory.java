@@ -1,6 +1,7 @@
 package at.campus02.dbp2.assignment;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class AppointmentRepositoryFactory {
 
@@ -17,6 +18,7 @@ public class AppointmentRepositoryFactory {
      * @return eine Implementierung von <code>{@link AppointmentRepository}</code>.
      */
     public static AppointmentRepository get(EntityManagerFactory factory) {
-        return null;
+
+        return new AppointmentTestRepository(factory);
     }
 }

@@ -1,20 +1,20 @@
 package at.campus02.dbp2.assignment;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Provider {
-@Id
+@Id @GeneratedValue
 private Integer id;
+@Enumerated
 private ProviderType type;
 private String address;
-@OneToMany
+@OneToMany(mappedBy = "provider",cascade = CascadeType.ALL)
 private List<Appointment> appointments;
 
+    public Provider(){}
     public Integer getId() {
         return id;
     }

@@ -1,16 +1,13 @@
 package at.campus02.dbp2.assignment;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 public class Appointment {
-    @Id
-    private int id;
+    @Id @GeneratedValue
+    private Integer id;
     @OneToOne
     private Customer customer;
     @ManyToOne
