@@ -11,7 +11,7 @@
         <class>at.campus02.dbp2.relations.Animal</class>
         <class>at.campus02.dbp2.relations.Student</class>
         <class>at.campus02.dbp2.relations.Species</class>
-
+        <class>at.campus02.dbp2.relations.Country</class>
         <properties>
             <!--
             Generelle Settings wie JDBC Url und Klassenname des verwendeten Treibers

@@ -1,6 +1,8 @@
 package at.campus02.dbp2.relations;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +14,13 @@ public class Animal {
     private String name;
     @ManyToOne
     private Species species;
+
+    public List<Country> getCountries() {
+        return countries;
+    }
+
+    @ManyToMany
+    private final List<Country> countries = new ArrayList<>();
 
     @OneToOne
     private Student owner;
