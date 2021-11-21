@@ -118,17 +118,20 @@ public class AppointmentTestRepository implements AppointmentRepository {
             throw new IllegalArgumentException("Provider does not exist, cannot update!");
         }
         manager.getTransaction().begin();
-        List<Appointment> appointmentListDB = read(provider.getId()).getAppointments();
         List<Appointment> appointmentListUpdated = provider.getAppointments();
-        for (Appointment a: appointmentListUpdated) {
-            if(!appointmentListDB.contains(a)){
-                manager.persist(a);
-            } else
-                manager.merge(a);
+        for (int i = 0; i < appointmentListUpdated.size()-1; i++) {
+            for (int j = i+1; j < appointmentListUpdated.size(); j++) {
+                if(appointmentListUpdated.get(i) == appointmentListUpdated.get(j))
+                    appointmentListUpdated.remove(appointmentListUpdated.get(j));
+            }
         }
-        manager.getTransaction().commit();
-
-        manager.getTransaction().begin();
+        for (Appointment a: appointmentListUpdated) {
+            List<Appointment> appointmentListDB = read(provider.getId()).getAppointments();
+                if (!appointmentListDB.contains(a)) {
+                    manager.persist(a);
+                }
+             }
+        manager.clear();
         Provider managed = manager.merge(provider);
         manager.getTransaction().commit();
         return managed;
