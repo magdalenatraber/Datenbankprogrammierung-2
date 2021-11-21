@@ -1,6 +1,7 @@
 package at.campus02.dbp2.assignment;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,11 +9,10 @@ import java.util.Objects;
 public class Provider {
 @Id @GeneratedValue
 private Integer id;
-@Enumerated
 private ProviderType type;
 private String address;
-@OneToMany(mappedBy = "provider",cascade = CascadeType.ALL)
-private List<Appointment> appointments;
+@OneToMany (mappedBy = "provider", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<Appointment> appointments = new ArrayList<>();
 
     public Provider(){}
     public Integer getId() {

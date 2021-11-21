@@ -4,11 +4,20 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@NamedQuery(
+        name = "Appointment.FindAt",
+        query = "select a from Appointment a " +
+                "where a.time > :from and a.time < :to " +
+                "and a.customer is null"
+)
+
 @Entity
 public class Appointment {
+
     @Id @GeneratedValue
     private Integer id;
     @OneToOne
+    @JoinColumn(name = "CUSTOMER_EMAIL")
     private Customer customer;
     @ManyToOne
     private Provider provider;
